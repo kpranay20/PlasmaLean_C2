@@ -30,23 +30,26 @@ The integrand is `2 Δψ² (Q P)₊` (`itg_isodynamic_eq`), so it vanishes at a 
 * `good_curvature_stable_iff`: for `η_B < 0`, some `κ` makes the integrand vanish at every
   `(x, y)` **iff** `0 ≤ η ≤ 2/3` (agrees with the source); for such `η` the choice `κ = −N`
   also satisfies the ground-state constraint pointwise (`good_curvature_ground_state`).
-* `bad_curvature_unstable`: for `η_B > 0` and `η ≠ 0`, **every** `κ` leaves a point with a
-  positive integrand. The source states that `0 ≤ η ≤ 2/3`, `η ≥ η_B` suffice for stability
-  (eq. 2.39 and the summary on p. 11); its argument (eqs. 2.36–2.39) shows that a ground state
-  must have `σ(κ_α + ω_α) = −σ(ω*^T − ω_α)` everywhere, which `Qf` cannot satisfy for all
-  `x ≥ 0` when `η_B > 0` (`Qf_eventually_sign`): the ground-state equation has no solution there,
-  so the formula does not give `A = 0` (an infimum `A = 0` over non-admissible `κ` is not excluded
-  and is not claimed here).
+* `bad_curvature_not_attained`: for `η_B > 0` and `η ≠ 0`, **every finite** `κ` leaves a point
+  with a positive integrand. In the source's bad-curvature window `0 < η_B ≤ η ≤ 2/3` this only
+  says the zero is **not attained**: there `κ_α + ω_α = κ + x N η_B` cannot have the sign
+  `−σ(ω*^T − ω_α)` for all `x ≥ 0` (`Qf_eventually_sign`), so the isodynamic density constraint
+  (2.36) has no exact solution, but the offending points lie at `x ≳ κ/(N η_B)`, where the
+  Maxwellian weight is `≈ e^{−x}`. An independent numerical solution of the source's
+  eqs. 2.15/2.17a/2.21 (N-47 §6) shows the constraint residual and `A` decaying like that weight as
+  `κ → ∞`: the source's claim `A = 0` holds as an **infimum**. Outside the window (`η < 0`,
+  `0 < η < η_B`, `η > 2/3`) the positive points sit at bounded `x` and the instability is genuine.
 * `eta_zero_stable`: with `η = 0`, `κ = −N` makes the integrand vanish for **every** `η_B`, so
   the source's "η ≥ η_B is necessary" fails at the boundary `η = 0` (its eq. 2.32 argument needs
   `η ≠ 0`).
 * The building blocks `unstable_of_eta_gt` (`η > 2/3`), `unstable_of_eta_neg` (`η < 0`),
-  `unstable_of_lt_etaB` (`0 < η < η_B`), `unstable_bad_curvature_window` (`0 < η_B ≤ η ≤ 2/3`).
+  `unstable_of_lt_etaB` (`0 < η < η_B`), and `bad_curvature_window_not_attained`
+  (`0 < η_B ≤ η ≤ 2/3`, where only attainment fails).
 
 **Not covered.** The integrated statements (these are pointwise in `(x, y)`, which is what the
 vanishing of a continuous integrand with a positive Maxwellian weight reduces to); the
-non-isodynamic case; the true (infimum) available energy when the ground-state equation has no
-solution.
+non-isodynamic case; a Lean proof that `A(κ) → 0` as `κ → ∞` in the bad-curvature window (only
+observed numerically).
 -/
 
 public section
@@ -215,9 +218,10 @@ theorem Qf_eventually_sign {κ N ηB : ℝ} (hN : N ≠ 0) (hB : 0 < ηB) :
     linarith
   linarith [neg_abs_le (κ * N)]
 
-/-- **The source's bad-curvature window is unstable**: for `0 < η_B ≤ η ≤ 2/3`, every `κ` leaves
-a point with `Q P > 0`. -/
-theorem unstable_bad_curvature_window {κ N η ηB : ℝ} (hN : N ≠ 0) (hB : 0 < ηB) (hle : ηB ≤ η)
+/-- **The source's bad-curvature window: the zero is not attained.** For `0 < η_B ≤ η ≤ 2/3`, every
+finite `κ` leaves a point with `Q P > 0`; the point lies at `x ≳ κ/(N η_B)`, so the available
+energy can still tend to `0` as `κ → ∞` (observed numerically, N-47 §6). -/
+theorem bad_curvature_window_not_attained {κ N η ηB : ℝ} (hN : N ≠ 0) (hB : 0 < ηB) (hle : ηB ≤ η)
     (hη : η ≤ 2 / 3) :
     ∃ x y, 0 ≤ x ∧ 0 ≤ y ∧ 0 < Qf κ N ηB x * Pf N η ηB x y := by
   obtain ⟨X, hX0, hX⟩ := Qf_eventually_sign (κ := κ) hN hB
@@ -232,16 +236,17 @@ theorem unstable_bad_curvature_window {κ N η ηB : ℝ} (hN : N ≠ 0) (hB : 0
   rw [e]
   exact mul_pos hQ hbr
 
-/-- **Bad curvature is never stable for `η ≠ 0`.** For `η_B > 0` and `η ≠ 0`, every ground-state
-parameter `κ` leaves a phase-space point with a positive integrand. -/
-theorem bad_curvature_unstable {κ N η ηB : ℝ} (hN : N ≠ 0) (hB : 0 < ηB) (hη : η ≠ 0) :
+/-- **Bad curvature: no exact zero for `η ≠ 0`.** For `η_B > 0` and `η ≠ 0`, every finite
+ground-state parameter `κ` leaves a phase-space point with a positive integrand. Inside the window
+`η_B ≤ η ≤ 2/3` this is a failure of attainment only (`bad_curvature_window_not_attained`). -/
+theorem bad_curvature_not_attained {κ N η ηB : ℝ} (hN : N ≠ 0) (hB : 0 < ηB) (hη : η ≠ 0) :
     ∃ x y, 0 ≤ x ∧ 0 ≤ y ∧ 0 < Qf κ N ηB x * Pf N η ηB x y := by
   rcases lt_or_gt_of_ne hη with h | h
   · exact unstable_of_eta_neg hN hB.ne' h
   · rcases lt_or_ge η ηB with h1 | h1
     · exact unstable_of_lt_etaB hN h h1
     · rcases le_or_gt η (2 / 3) with h2 | h2
-      · exact unstable_bad_curvature_window hN hB h1 h2
+      · exact bad_curvature_window_not_attained hN hB h1 h2
       · exact unstable_of_eta_gt hN hB.ne' h2
 
 /-- **The bracket is nonnegative in the window** `0 ≤ η ≤ 2/3`, `η_B ≤ η`. -/
