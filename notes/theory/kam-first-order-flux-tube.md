@@ -131,3 +131,36 @@ without computing neighbouring tori; with C2 the normal displacement per unit fl
 (the first two are torus integrals the certificate pipeline can enclose; `dΦ/dV` is
 `⟨B·∇φ⟩`-type, to be derived), the Whitney-C¹ theorem for C2, and the Boozer-angle derivative (C3).
 
+## 8. The project's own KAM twist is `2π ι′` (20 November 2026; untrusted numerics)
+
+The certified KAM chain (`Design/KamFlowStepG`, `FlowFieldG`) uses the frame `V₀ = K − A`
+(radial from the axis approximation) with area density `w = D/R^p`, `p = 7`, i.e.
+`w = R B^φ`, the flux density of the section; torsion `T₀ = (Y × V₀)/(w W₀²)`, `W₀ = ∂_θK × V₀`
+(`scripts/dommaschk_kam/kam_constants.py`, `torsion`). Its average, against `dι/dΦ` from
+neighbouring Galerkin tori (`δ = 1e-4`, §7):
+
+| torus | `⟨T₀⟩` | `dι/dΦ` | ratio | ratio/2π − 1 |
+| --- | --- | --- | --- | --- |
+| A | 14.06296222 | 2.238171 | 6.2832383 | +8.4e-6 |
+| B | 10.96866183 | 1.745606 | 6.2835844 | +6.4e-5 |
+| C | 14.26392119 | 2.270160 | 6.2832240 | +6.2e-6 |
+
+The residuals equal the finite-difference errors of §7, so **`⟨T₀⟩ = 2π dι/dΦ`** in the project
+frame, with no further factor (the `2π`: `Φ` is the full toroidal flux, the action conjugate to
+the angle in turns is `Φ/2π`).
+
+**Consequence: a certified lower bound on the shear already exists.** The torus-C chain certifies
+the twist constant `tauC = 14.1623 ≤ |⟨Talg⟩|` (`Design/DommaschkKamCAdmOut`, `consts_sharp`; on-demand,
+workstation-checked) and propagates the margin `τ′ = τ − kTc·eM > 0` to the KAM torus
+(`DommaschkKamCConsts.dk_τ'`). With the identity above this reads
+`|dι/dΦ| ≥ 14.16/2π ≈ 2.254` at torus C (true value ≈ 2.270). What is missing:
+
+1. **an upper bound** (two-sided enclosure): `torsion_bounds` (`DommaschkKamCAdmFrame`) gives
+   `|⟨YZ⟩| ≥ m_Y − n_Y ζ` from a centre; the same argument gives `|⟨YZ⟩| ≤ M_Y + n_Y ζ` once the
+   centre average is enclosed above. This needs a re-run of the admissibility chain (heavy:
+   workstation; the laptop used on 20 November 2026 has 6 GB of RAM);
+2. **the identification** `⟨Tor⟩ = 2π ι′` as a theorem: it needs the Whitney-C¹ family (claim C2),
+   not in Lean; until then the certified number is the twist, and its reading as shear is supported
+   by the numerics above;
+3. `cc` and `dΦ/dV` are not needed in this frame (they were for the ELP-S normalization of §7).
+

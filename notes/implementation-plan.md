@@ -2176,4 +2176,9 @@ peak above 3 GB. Up to 3 light modules may build at once within the total. This 
   kam-route.md H3/H4 frame is FHL's map theorem, not ELP-S) and an untrusted numerical check on the
   Dommaschk tori A, B, C: the ELP-S twist equals `(cc²/2π²) dι/dV` to the finite-difference
   accuracy (ratio 1.00001). Script `scripts/dommaschk_kam/twist_vs_shear.py`.
+- **N-48 §8 (same day):** the project's own certified KAM twist equals `2π dι/dΦ` (frame
+  `V₀ = K − A`, density `D/R⁷ = R B^φ`; tori A, B, C to the finite-difference accuracy). So the
+  torus-C certificate already gives `|dι/dΦ| ≥ 14.16/2π ≈ 2.254` (true ≈ 2.270), modulo the
+  identification (Whitney family, not in Lean). An upper bound needs a workstation re-run of the
+  admissibility chain.
 
