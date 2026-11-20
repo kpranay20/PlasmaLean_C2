@@ -111,6 +111,7 @@ public import PlasmaLean.Certificates.RadiiPolynomial
 public import PlasmaLean.Design.ValidatedBVP
 public import PlasmaLean.Theory.Transport.FluxGeometry
 public import PlasmaLean.Theory.Transport.StiffTransport
+public import PlasmaLean.Theory.Transport.StiffKernelLink
 public import PlasmaLean.Theory.Kinetic.LinearGyrokinetic
 public import PlasmaLean.Theory.Kinetic.LinearGyrokineticGrid
 public import PlasmaLean.Theory.Kinetic.ITGAvailableEnergy

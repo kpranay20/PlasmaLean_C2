@@ -138,6 +138,6 @@ affected until restated.
 ## Outputs and next dependencies
 
 - Q-33 (a): done (compiled 20 November 2026).
-- Q-33 (b): derive `Q ≤ W` from a steady `ClassicalRadialSolution` (integrate the divergence form).
+- Q-33 (b): done (20 November 2026): `Theory/Transport/StiffKernelLink`: `steady_flux_eq_integral` (heat flow `−V'Df'` equals `∫₀^ψ V'R` for a steady kernel profile), `axisFlux_eq_zero` (both axis conventions), `steady_flux_le_heating` (`Q ≤ ∫₀^ψ V'H` when `R ≤ H`). Chain rule for `D(ψ, f ψ)` supplied as in `Sanity.op_divergence_form`.
 - Q-33 (c): user decision on §5.
 - Q-33 (d): layer 2 (§4), starting with the source checks.
