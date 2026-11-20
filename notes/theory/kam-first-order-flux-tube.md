@@ -12,10 +12,10 @@
 | Dependency requirement | certified `K`, `N`, `⟨T⟩` enclosures on a torus (the KAM certificate already bounds `|⟨T⟩⁻¹|`; two-sided enclosures and the frame are new outputs) |
 | Produces | Q-36 statements; a plan; claims to check (§3) |
 | Difficulty | research: the identification of `⟨T⟩` with `dι/dψ` in the flow (ELP-S) setting, the derivative of the Boozer angle map, and certification cost |
-| Status | stated (proposal, 20 November 2026); nothing verified |
+| Status | C1 supported by source study (with corrected attribution and normalization) and **confirmed numerically** on tori A, B, C (untrusted); C2, C3 supported by source study (derived, conditional); nothing in Lean |
 | Lean evidence | none (uses `ITGBoozer`, `ITGDriftChart` downstream) |
 | Audit evidence | not audited |
-| Last updated | 20 November 2026: created |
+| Last updated | 20 November 2026: created; source study and numerical check of C1 added (§6, §7) |
 
 ## Purpose and scope
 
@@ -78,3 +78,56 @@ in the flow setting used here**:
 Check (C1) against ELP-S Definition 6.1 and the FHL/Haro bookkeeping (source study); then a
 numerical prototype on torus C (untrusted oracle): `⟨T⟩` vs a finite-difference `ι′` between tori C
 and A, and `∂_ψ|B|` from `∂_ω K`. Only then a certification plan.
+
+## 6. Source study (20 November 2026; agent report, sources read verbatim on arXiv)
+
+Sources: ELP-S arXiv:2104.08149v3 §6; Figueras–Haro–Luque arXiv:1601.00084 §2;
+de la Llave–González–Jorba–Villanueva, Nonlinearity 18 (2005); Haro–Luque arXiv:1711.05515.
+
+- **Attribution correction.** The frame quantities `N₀`, `B = −(DKᵀΩN₀)⁻¹`, `Ω` and the torsion
+  `T = N(θ+ω)ᵀΩ DF N` quoted in kam-route.md H3/H4 (and in §2 above) are from **FHL Theorem 2.5**,
+  a theorem for exact symplectic **maps** (for a 3-D field: through a Poincaré map). **ELP-S
+  Theorem 6.2** (flows) uses the frame `(DK, n/|n|²)`, `n = ∂_1K × ∂_2K` (eqs. 6.4, 6.7), and the
+  twist constant `T = [A]·ω^⊥`, `A = −G_K⁻¹ DKᵀ (DB + DBᵀ) n/|n|²` (Def. 6.1, eq. 6.3). It fixes
+  the direction of the frequency (so `ι`), and says nothing about families.
+- **C1** (supported with modifications): the twist is proportional to the shear, not equal to it.
+  Map route: `⟨T⟩ = dι/dψ_t` (flux form, action `ψ_t`; `2π dι/dψ_t` with action `ψ_t/2π`).
+  Flow route (ELP-S): `n/|n|²` is a **volume** coordinate, and the twist is the rate of change of
+  the frequency direction per unit enclosed volume.
+- **C2** (supported, derived, conditional): `∂_ωK = DK·a + N⟨T⟩⁻¹` (maps); for flows the normal
+  part of `∂_sK` is constant. Needs a Whitney-C¹ family over the Diophantine set (a separate
+  theorem: dLGJV §1, refs Van02, dlLV00), an invertible twist, and a gauge for `⟨a⟩`.
+- **C3** (supported by standard structure): the change to Boozer angles solves a magnetic
+  differential equation on the torus; its derivative across the family solves another one, whose
+  right side needs `∂_sK` and `ω′` from C2 (two strip losses).
+
+## 7. Numerical check of C1 (untrusted; `scripts/dommaschk_kam/twist_vs_shear.py`)
+
+In the conventions of `scripts/dommaschk_kam/twist.py` (angles in turns, `θ/2π`, `φ/π` over one
+field period, `ω = ι/2`, field-line time normalized by `cc = 1/⟨1/B^φ⟩`, `ω_s = cc(ω/π, 1/π)`),
+the prediction is
+
+  **`T = (cc²/2π²) · dι/dV`**, `V` = volume enclosed per field period,
+
+because `n/|n|²` sweeps unit volume per unit parameter area and only the `ω^⊥` component of the
+frequency change survives the cross product. Tori A, B, C at `N × M = 32 × 26` (double precision;
+invariance errors 4e-11, 9e-10, 7e-12), `dι/dV` by centred differences from neighbouring Galerkin
+tori at `ι ± δ`:
+
+| torus | `T` | prediction | ratio, `δ = 2e-4` | ratio, `δ = 1e-4` |
+| --- | --- | --- | --- | --- |
+| A | 5.3708e-2 | 5.3708e-2 | 1.000035 | 1.0000086 |
+| B | 3.9514e-2 | 3.9511e-2 | 1.000261 | 1.000065 |
+| C | 5.5787e-2 | 5.5787e-2 | 1.000025 | 1.0000062 |
+
+The deviation falls by about 4 when `δ` halves (second-order differences), so the ratio converges
+to 1. The raw ratio `T/(dι/dΦ)` is not constant (0.0240, 0.0226, 0.0246), because
+`dΦ/dV` (0.363, 0.356, 0.366) varies: the shear in flux is
+`dι/dΦ = (2π²/cc²) · T · dV/dΦ`.
+
+**Consequence.** On a certified torus, the certified twist (with `cc` and `dΦ/dV`) gives `ι′`
+without computing neighbouring tori; with C2 the normal displacement per unit flux is
+`(n/|n|²)·dV/dΦ` (normal part). Remaining for Q-35 (d): certified enclosures of `T`, `cc`, `dΦ/dV`
+(the first two are torus integrals the certificate pipeline can enclose; `dΦ/dV` is
+`⟨B·∇φ⟩`-type, to be derived), the Whitney-C¹ theorem for C2, and the Boozer-angle derivative (C3).
+

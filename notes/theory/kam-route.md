@@ -152,6 +152,8 @@ the Fourier norm `‖u‖_{F,ρ} = Σ|û_k| e^{2π|k|ρ} ≥ ‖u‖_ρ`.
   ‖DK‖_ρ < σ_DK, ‖DKᵀ‖_ρ < σ_DKᵀ and dist(K(T^n_ρ), ∂ℬ) > 0.
 - **H3:** a transversal frame N₀, with ‖N₀‖ ≤ c_N0 (and similar), and ‖B‖_ρ < σ_B, where
   B = −(DKᵀ Ω(K) N₀)⁻¹.
+- *(Attribution note, 20 November 2026, N-48 §6: H3/H4 are FHL Theorem 2.5, for maps; ELP-S
+  Theorem 6.2 for flows uses the frame `(DK, n/|n|²)` and the twist of its Definition 6.1.)*
 - **H4 (twist / non-degeneracy):** the torsion T(θ) = N(θ+ω)ᵀ Ω(K(θ+ω)) DF(K(θ)) N(θ) satisfies
   |⟨T⟩⁻¹| < σ_T, where N = DK·A + N₀B and A = −½ BᵀN₀ᵀΩ(K)N₀B.
 - **H5 (Diophantine):** |k·ω − m| ≥ γ|k|₁^{−τ} for all k ≠ 0, with τ ≥ n.
