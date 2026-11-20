@@ -188,6 +188,8 @@ that carry net toroidal current (Q-18).
 | `Q-30` | **Signed free-boundary stability benchmark** (N-44, from N-42): (a) lean-ready: the cylinder window inequality chain with the Bessel ratio and Neumann-impedance lower bounds as hypotheses, giving `F_mn ≥ s²/8` and the period-uniform gap `(s²/80)(1 + \|m\| + κ)`; (b) research: transfer to a bent tube or torus with Hessian-change bounds uniform in the period | G-4, Q-3, Q-14, Q-20, N-44 | open ((a) lean-ready) | numerically checked (N-42); the window needs a wall within about 5% of the minor radius at β ≈ 0.04 (unstable `m = 1` from `b/a = 1.1`); Mathlib has no modified Bessel functions |
 | `Q-31` | **Toroidal interface sign test on the certified Dommaschk torus A** (N-44): does a `σ` exist with `a₀ + σb₀ < 0` on torus A (`a₀ = II(Y, g⁻¹ω)/\|ω\|²`, `b₀ = II(Y, g⁻¹Jω)`), giving a positive interface term for small stepped pressure? | G-4, Q-14, Q-20, N-33, N-44 | open (numerics first, untrusted) | none; needs `g`, `II`, `ω` on `ExactTorusA` (on-demand), then a certificate if feasible; the exterior KAM graphs (Enciso–Luque–Peralta-Salas) are an unproved input |
 | `Q-32` | **Certified harmonic perturbations of the Dommaschk seed** (N-42 S-10): find members `B₀ + ∇Σa_jP_j` (symmetric harmonic polynomials) with better QS diagnostics and their own torus certificates, or quantify the KAM radius `ε_N` | Q-16, G-1, G-10, N-31, N-33, N-41 | open (research; workstation route) | KAM persistence (source Theorem 4, plausible) gives existence for an unquantified `ε_N` only; every member is C1 (vacuum); the certificate pipeline of N-33 is a-posteriori per field |
+| `Q-33` | **Turbulence as a mandatory model class (layer 1 of the turbulence programme, user request 20 November 2026)**: state microturbulence as a lower bound on the heat flux (`StiffFloorAt`: `S T (g − κ)₊ ≤ Q`, critical log-gradient `κ`, stiffness `S`) and prove C5 consequences for every law in the class: (a) core-temperature cap and no-access theorems; (b) the link `Q ≤ W` from a steady kernel solution; (c) restate C5 anomalous transport as a law in the class (user decision); (d) layer 2: certified ITG geometry quantities (available energy, energetic growth bound, critical gradient) feeding `κ` | G-2, G-10, G-11, Q-13, Q-15, Q-22 | (a) verified; (b)–(d) open | N-45: `core_le` (`T(0) ≤ (T(1)+w̄)e^{∫κ̂}`), sharp `core_le_const`, `stiff_limit`, no-access corollaries, critical-gradient-model witness, sharpness profile, in `Theory/Transport/StiffTransport` (default build). Stiff limit: a 10 keV core needs `T_edge ≥ 10 keV · e^{−∫(a/L_T)_crit dρ}` |
+| `Q-34` | **Linear gyrokinetic model contract (layer 2, user decision 20 November 2026)**: linear, local, electrostatic, collisionless gyrokinetics (kinetic ions, adiabatic electrons) as operators `A` (streaming + drift), `J`/`K` (gyroaverage, adjoint), `Ω` (gradient drive); (a) free-energy balance and the Helander–Plunk growth bound; (b) a concrete discretized instance proving `skew`; (c) the continuum instance; (d) geometry inputs (`ω_d`, `k⊥`, `B` along a field line) from a certified candidate | G-10, G-2, Q-33 | (a) verified; (b)–(d) open | N-46: `LinearGKModel`, `eigen_balance` ((re s) H = D), `H_ge`, `growth_le`, `growth_le_of_qn`, `eigen_re_eq_zero_of_no_drive`, `growth_bound_indep_A` (the bound does not see `A`), `energy_balance` (dH/dt = 2D) in `Theory/Kinetic/LinearGyrokinetic` |
 
 ### RG.3 Note registry and dependency graph
 
@@ -240,6 +242,8 @@ superseded; mixed notes list the status of their parts. "Lean" names compiled ev
 | `N-42` | `notes/theory/fusion-complex-geometry-assessment.md`: assessment of the complex vacuum fields and stability estimates research note (18 November 2026) | Q-16, Q-24, Q-3, Q-14, Q-20, Q-28; G-1, G-2, G-4, G-6, G-10; Q-29–Q-32 | N-1, N-12, N-17, N-29, N-31, N-32, N-33, N-37, N-40, N-41; `dommaschk_nested`, `AdmBoundsG`, `laplacian_normSqField`, `gyroNoether_hasDerivAt` | routine | assessment complete: 35 claims, 30 checked and correct, 0 incorrect, 5 unverified; scripts `scripts/fcg_source/`; analysis `notes/reasoning/2026-11-20-source-fusion-complex-geometry/`; audit item AF-1 | assess the earlier handoff `sources/complex_geometry_handoff.pdf`; lean-ready corollary: a vacuum field of constant \|B\| is constant (from `laplacian_normSqField`) |
 | `N-43` | `notes/theory/weak-qs-corrected-flux.md`: corrected full-orbit flux for exact weak QS, absorbing-core certificate, hot-core moments | Q-29, G-6, G-2; Q-1, Q-23, Q-28 | method for N-29, N-17; N-42; `WeakQS`, `GyroNoether` | routine–moderate (Lean); research (application) | stated; proof checked; (a), (b) lean-ready | Q-29 (a): the homological solution and the exact identity |
 | `N-44` | `notes/theory/cylinder-interface-stability.md`: fully signed free-boundary cylinder benchmark, toroidal interface criterion, transfer | Q-30, Q-31, G-4, Q-3, Q-14, Q-20 | method for N-12; N-42, N-13, N-33 | routine (Q-30 a); moderate (Q-31); research (Q-30 b) | stated; window checked numerically; (a) lean-ready | Q-30 (a); Q-31 numerics on torus A |
+| `N-45` | `notes/theory/stiff-turbulent-transport.md`: stiff turbulent transport as a mandatory model class; core-temperature cap; ITG layer-2 triage | Q-33, G-2, G-10, G-11 | N-20, N-40 | routine (layer 1); research (layer 2) | layer 1 verified; layer 2 stated | Q-33 (b); source checks for the AE formula |
+| `N-46` | `notes/theory/gyrokinetic-model-contract.md`: linear local electrostatic gyrokinetic model contract, free energy and growth bounds | Q-34, Q-33, G-10, G-2 | N-45, N-40, N-20 | routine (abstract layer); research (continuum instance, geometry inputs) | abstract layer verified; instances open | Q-34 (b): discretized instance with `skew` proved |
 
 Main dependency edges: N-9 → N-10 → N-14 → N-15 → (Q-4, Q-5); N-10 → N-13 → (N-16 → Q-2, Q-14);
 N-4 → (N-8, N-7 → N-17 → Q-1); N-12 → (Q-3, Q-14, Q-16) → G-4; N-4 → Q-16 → G-6; N-2, N-6 → Q-10 → G-2, G-7;
@@ -2109,3 +2113,22 @@ peak above 3 GB. Up to 3 light modules may build at once within the total. This 
 - **Rows updated:** RG.1 G-1, G-4, G-6. **Gap:** the earlier handoff
   `sources/complex_geometry_handoff.pdf` (cited for the weak-QS equilibrium obstruction and the weak
   MHD lift) is not assessed yet.
+
+### Turbulence programme, layer 1 (20 November 2026)
+
+- User request: extend C2 with turbulence, starting with ITG; then account for microturbulence being
+  present in every geometry. Decision: three layers (model class with a turbulent floor; provable ITG
+  geometry quantities; supplied saturation law between them), layer 1 first.
+- **New note N-45, question Q-33.** New module `PlasmaLean/Theory/Transport/StiffTransport.lean`
+  (Mathlib only; not yet imported in `PlasmaLean.lean`): `StiffFloorAt`, `StiffSteadyProfile`,
+  `neg_deriv_le`, `core_le`, `core_le_const`, `stiff_limit`, `core_lt_of_cap_lt(_const)`,
+  `stiffFloorAt_criticalGradient`, `logGrad_le_of_floor_zero`, `sharpProfile_stiffSteady`.
+  **Not compiled**: no Lean toolchain on the machine used; status stays below verified.
+- Layer-2 source triage in N-45 §4 (Mackenbach et al. AE for ITG; Helander–Plunk/Podavini energetic
+  bound); three issues in the AE source to check before formalizing.
+- Pending user decisions: the C5 contract wording (N-45 §5).
+- **Compiled (same day):** Lean toolchain installed locally; `Theory/Transport/StiffTransport` and the
+  new `Theory/Kinetic/LinearGyrokinetic` build with zero warnings and standard axioms only; both
+  imported in `PlasmaLean.lean`. User approved a linear gyrokinetic model contract: **N-46, Q-34**
+  (abstract layer verified; concrete instances open).
+

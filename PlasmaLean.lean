@@ -110,6 +110,8 @@ public import PlasmaLean.Certificates.WeightedEll1
 public import PlasmaLean.Certificates.RadiiPolynomial
 public import PlasmaLean.Design.ValidatedBVP
 public import PlasmaLean.Theory.Transport.FluxGeometry
+public import PlasmaLean.Theory.Transport.StiffTransport
+public import PlasmaLean.Theory.Kinetic.LinearGyrokinetic
 public import PlasmaLean.Design.HelicalFluxGeometry
 public import PlasmaLean.Design.HelicalTransportBarrier
 public import PlasmaLean.Theory.Geometry.SurfaceCover
