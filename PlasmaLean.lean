@@ -115,6 +115,7 @@ public import PlasmaLean.Theory.Kinetic.LinearGyrokinetic
 public import PlasmaLean.Theory.Kinetic.LinearGyrokineticGrid
 public import PlasmaLean.Theory.Kinetic.ITGAvailableEnergy
 public import PlasmaLean.Theory.Kinetic.ITGBoozer
+public import PlasmaLean.Theory.Kinetic.ITGStabilityWindows
 public import PlasmaLean.Design.HelicalFluxGeometry
 public import PlasmaLean.Design.HelicalTransportBarrier
 public import PlasmaLean.Theory.Geometry.SurfaceCover
