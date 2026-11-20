@@ -112,6 +112,7 @@ public import PlasmaLean.Design.ValidatedBVP
 public import PlasmaLean.Theory.Transport.FluxGeometry
 public import PlasmaLean.Theory.Transport.StiffTransport
 public import PlasmaLean.Theory.Kinetic.LinearGyrokinetic
+public import PlasmaLean.Theory.Kinetic.LinearGyrokineticGrid
 public import PlasmaLean.Design.HelicalFluxGeometry
 public import PlasmaLean.Design.HelicalTransportBarrier
 public import PlasmaLean.Theory.Geometry.SurfaceCover
