@@ -10,10 +10,10 @@
 | Addresses | `Q-35` (new); `Q-33` (d), `G-10`, `G-2` |
 | Depends on | N-45 §4 (source triage), N-20 (TEM available-energy kernel), N-46 (gyrokinetic contract); Lean: none (Mathlib only) |
 | Dependency requirement | the AE formula is supplied by the source (variational derivation not formalized) |
-| Produces | `Theory/Kinetic/ITGAvailableEnergy.lean`, `Theory/Kinetic/ITGBoozer.lean`, `Theory/Kinetic/ITGStabilityWindows.lean`; Q-35 (d) |
+| Produces | `Theory/Kinetic/ITGAvailableEnergy.lean`, `Theory/Kinetic/ITGBoozer.lean`, `Theory/Kinetic/ITGStabilityWindows.lean`, `Theory/Kinetic/ITGDriftIdentity.lean`, `Theory/Kinetic/ITGDriftChart.lean`; Q-35 (d) |
 | Difficulty | routine (algebra); moderate (η windows, Boozer link); hard (certified evaluation on the Dommaschk tori) |
 | Status | algebra, Boozer link and isodynamic stability windows **verified** (20 November 2026; zero warnings, standard axioms); evaluation on a candidate open (blocked like C2: no volume chart) |
-| Lean evidence | `aeIntegrand_nonneg`, `aeIntegrand_eq_zero_iff`, `aeIntegrand_pos_of_antiparallel`, `itgIntegrand_eq_zero_iff`, `aeIntegrand_isodynamic`, `aeIntegrand_smul`, `aeFormula_nonneg`, `aeFormula_eq_zero_of`, `groundState_constraints_flat`, `itg_ae_zero_of_no_temperature_gradient`; Boozer link: `hasDerivAt_logB_alpha`, `hasDerivAt_logB_psi`, `omegaPsi_eq_zero_of_Btheta`, `omegaPsi_ne_zero`, `boozerIntegrand_isodynamic`, `paper_condition_not_sufficient`; windows: `good_curvature_stable_iff`, `good_curvature_ground_state`, `bad_curvature_not_attained`, `eta_zero_stable`, `Qf_eventually_sign` (default build) |
+| Lean evidence | `aeIntegrand_nonneg`, `aeIntegrand_eq_zero_iff`, `aeIntegrand_pos_of_antiparallel`, `itgIntegrand_eq_zero_iff`, `aeIntegrand_isodynamic`, `aeIntegrand_smul`, `aeFormula_nonneg`, `aeFormula_eq_zero_of`, `groundState_constraints_flat`, `itg_ae_zero_of_no_temperature_gradient`; Boozer link: `hasDerivAt_logB_alpha`, `hasDerivAt_logB_psi`, `omegaPsi_eq_zero_of_Btheta`, `omegaPsi_ne_zero`, `boozerIntegrand_isodynamic`, `paper_condition_not_sufficient`; windows: `good_curvature_stable_iff`, `good_curvature_ground_state`, `bad_curvature_not_attained`, `eta_zero_stable`, `Qf_eventually_sign`; drift identity: `boozer_drift_identity`, `chart_drift_alpha`, `chart_drift_psi` (default build) |
 | Audit evidence | not audited |
 | Last updated | 20 November 2026: created |
 
@@ -82,7 +82,11 @@ model; `∂_α ln B|_{ψ,φ} = ∂_θB/B` and `∂_ψ ln B|_{α,φ} = (∂_ψB +
 (`hasDerivAt_logB_alpha`, `hasDerivAt_logB_psi`, `ι′` a supplied derivative); the drifts
 `omegaAlpha`, `omegaPsi` and the integrand `boozerIntegrand`. Hand calculation (not in Lean):
 in vacuum Boozer form `v_∇·∇α = ∂_ψB|_{α,φ}` and `v_∇·∇ψ = −∂_θB` exactly, so `φ` is the right
-coordinate along the line. **Physics:** `omegaPsi_ne_zero` shows that exact quasi-axisymmetry
+coordinate along the line; **now verified** (`Theory/Kinetic/ITGDriftIdentity`,
+`ITGDriftChart`): at a `Contract.BoozerChart` point, for `v·eᵢ = ∂ᵢ|B|` and `A·eᵢ = ∂ᵢf`,
+`(B × v)·A = |B|²(b₁c₂ − b₂c₁)`; hence `(B × ∇|B|)·∇α = |B|²(∂_ψB + ι′φ∂_θB)` and
+`(B × ∇|B|)·∇ψ = −|B|²∂_θB` (Cramer expansion plus `G = J|B|²`; the chain rule for `∇|B|` and the
+coordinate gradients are supplied). **Physics:** `omegaPsi_ne_zero` shows that exact quasi-axisymmetry
 (`∂_θB ≠ 0`) leaves the local radial drift, so C2 does not imply a small ITG available energy;
 only isodynamic tubes remove it (`boozerIntegrand_isodynamic`).
 
@@ -147,7 +151,7 @@ integrand, "integrand zero everywhere" is equivalent to `A = 0` for a given `κ`
 
 ## 7. Next steps (Q-35)
 
-- (c′) The drift identity `v_∇·∇α = ∂_ψB|_{α,φ}` from `Contract.BoozerChart`.
+- (c′) done (drift identity on a Boozer chart); remaining: derive `v·eᵢ = ∂ᵢ|B|` from `modB` and the coordinate gradients from a differentiable inverse chart.
 - (d) Evaluation on a candidate: route (i) or (ii) of §5 first.
 - The integrated (measure-theoretic) form of the windows, and a proof that `A(κ) → 0` as
   `κ → ∞` in the bad-curvature window.

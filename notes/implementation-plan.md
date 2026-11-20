@@ -245,7 +245,7 @@ superseded; mixed notes list the status of their parts. "Lean" names compiled ev
 | `N-44` | `notes/theory/cylinder-interface-stability.md`: fully signed free-boundary cylinder benchmark, toroidal interface criterion, transfer | Q-30, Q-31, G-4, Q-3, Q-14, Q-20 | method for N-12; N-42, N-13, N-33 | routine (Q-30 a); moderate (Q-31); research (Q-30 b) | stated; window checked numerically; (a) lean-ready | Q-30 (a); Q-31 numerics on torus A |
 | `N-45` | `notes/theory/stiff-turbulent-transport.md`: stiff turbulent transport as a mandatory model class; core-temperature cap; ITG layer-2 triage | Q-33, G-2, G-10, G-11 | N-20, N-40 | routine (layer 1); research (layer 2) | layer 1 verified; layer 2 stated | Q-33 (b); source checks for the AE formula |
 | `N-46` | `notes/theory/gyrokinetic-model-contract.md`: linear local electrostatic gyrokinetic model contract, free energy and growth bounds | Q-34, Q-33, G-10, G-2 | N-45, N-40, N-20 | routine (abstract layer); research (continuum instance, geometry inputs) | abstract layer and grid instance verified | available energy on the Boozer model (N-45 §4); Q-34 (c), (d) |
-| `N-47` | `notes/theory/itg-available-energy.md`: ITG available energy: source check (vanishing condition corrected), verified algebra, route to a certified value | Q-35, Q-33, G-10, G-2 | N-45, N-46, N-20 | routine (algebra); hard (certified evaluation) | algebra, Boozer link and windows verified | (d) via an approximate shell chart or the KAM family (shared with C2); (c′) drift identity from the chart |
+| `N-47` | `notes/theory/itg-available-energy.md`: ITG available energy: source check (vanishing condition corrected), verified algebra, route to a certified value | Q-35, Q-33, G-10, G-2 | N-45, N-46, N-20 | routine (algebra); hard (certified evaluation) | algebra, Boozer link, windows and chart drift identity verified | (d) via an approximate shell chart or the KAM family (shared with C2) |
 
 Main dependency edges: N-9 → N-10 → N-14 → N-15 → (Q-4, Q-5); N-10 → N-13 → (N-16 → Q-2, Q-14);
 N-4 → (N-8, N-7 → N-17 → Q-1); N-12 → (Q-3, Q-14, Q-16) → G-4; N-4 → Q-16 → G-6; N-2, N-6 → Q-10 → G-2, G-7;
@@ -2162,4 +2162,8 @@ peak above 3 GB. Up to 3 light modules may build at once within the total. This 
   to `bad_curvature_not_attained`, `bad_curvature_window_not_attained`. What remains for the
   authors: the "if and only if" sentence, "positive definite", the likely factor 2 in eq. 2.3, the
   `η = 0` boundary of "η ≥ η_B necessary", and the eq. reference (2.28)→(2.27). N-47 §§2, 6.
+- **Drift identity on a Boozer chart (Q-35 (c′)), same day:** `Theory/Kinetic/ITGDriftIdentity`,
+  `ITGDriftChart`: `(B × ∇|B|)·∇α = |B|²(∂_ψB + ι′φ∂_θB)`, `(B × ∇|B|)·∇ψ = −|B|²∂_θB` at any
+  `Contract.BoozerChart` point (the source's eq. 2.10 with `ℓ ↦ φ`, no metric factor). Zero
+  warnings, standard axioms.
 
