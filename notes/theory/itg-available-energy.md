@@ -10,10 +10,10 @@
 | Addresses | `Q-35` (new); `Q-33` (d), `G-10`, `G-2` |
 | Depends on | N-45 §4 (source triage), N-20 (TEM available-energy kernel), N-46 (gyrokinetic contract); Lean: none (Mathlib only) |
 | Dependency requirement | the AE formula is supplied by the source (variational derivation not formalized) |
-| Produces | `Theory/Kinetic/ITGAvailableEnergy.lean`; Q-35 (b)–(d) |
+| Produces | `Theory/Kinetic/ITGAvailableEnergy.lean`, `Theory/Kinetic/ITGBoozer.lean`; Q-35 (b), (d) |
 | Difficulty | routine (algebra); moderate (η windows, Boozer link); hard (certified evaluation on the Dommaschk tori) |
-| Status | algebra **verified** (20 November 2026; zero warnings, standard axioms); η windows, Boozer link and evaluation open |
-| Lean evidence | `aeIntegrand_nonneg`, `aeIntegrand_eq_zero_iff`, `aeIntegrand_pos_of_antiparallel`, `itgIntegrand_eq_zero_iff`, `aeIntegrand_isodynamic`, `aeIntegrand_smul`, `aeFormula_nonneg`, `aeFormula_eq_zero_of`, `groundState_constraints_flat`, `itg_ae_zero_of_no_temperature_gradient` (default build) |
+| Status | algebra and Boozer link **verified** (20 November 2026; zero warnings, standard axioms); η windows and evaluation on a candidate open (the latter blocked like C2: no volume chart) |
+| Lean evidence | `aeIntegrand_nonneg`, `aeIntegrand_eq_zero_iff`, `aeIntegrand_pos_of_antiparallel`, `itgIntegrand_eq_zero_iff`, `aeIntegrand_isodynamic`, `aeIntegrand_smul`, `aeFormula_nonneg`, `aeFormula_eq_zero_of`, `groundState_constraints_flat`, `itg_ae_zero_of_no_temperature_gradient`; Boozer link: `hasDerivAt_logB_alpha`, `hasDerivAt_logB_psi`, `omegaPsi_eq_zero_of_Btheta`, `omegaPsi_ne_zero`, `boozerIntegrand_isodynamic`, `paper_condition_not_sufficient` (default build) |
 | Audit evidence | not audited |
 | Last updated | 20 November 2026: created |
 
@@ -37,20 +37,31 @@ dynamics neglected, fixed density profile, local Maxwellian, unit-disk correlati
 `G = √((c²+d²)/(a²+b²))` and constraints `∫ w a G = ∫ w c`, `∫ w b G = ∫ w d` at each `ℓ`
 (eq. 2.17 rewritten; `w = f_M/T₀`).
 
-## 2. Source check (20 November 2026)
+## 2. Source check (20 November 2026, verbatim from the published PDF, J. Plasma Phys. 91 (2025) E144)
 
-1. **Prefactor.** The phase-space Jacobian is displayed as `π/m`; with `μ = m v⊥²/(2B)` one gets
-   `d³r d³v = (2π/m) dψ dα dℓ dμ dv∥`. Unresolved (depends on the source's `μ` convention). It
-   affects only the positive constant, so the Lean formula keeps a general `C > 0`; no verified
-   statement depends on it.
-2. **Vanishing condition (corrected).** The source's eq. 2.23 (`ad = bc`) is necessary but not
-   sufficient: the integrand vanishes iff `ad = bc` **and** `ac + bd ≥ 0`
-   (`aeIntegrand_eq_zero_iff`); antiparallel vectors satisfy `ad = bc` with a positive integrand
-   (`aeIntegrand_pos_of_antiparallel`). Physical form: `itgIntegrand_eq_zero_iff`.
-3. **Pure density gradient.** The extracted eqs. 2.25–2.26 did not follow from 2.23 as read. The
-   claim itself is proved directly: with `η = 0`, `κ_α = −ω*`, `κ_ψ = 0` satisfies the constraints
-   and gives `A = 0` in every geometry (`itg_ae_zero_of_no_temperature_gradient`,
-   `groundState_constraints_flat`).
+1. **Vanishing condition: misstated, partly self-corrected.** §2.3, p. 9: "In the notation of
+   (2.22), this occurs if and only if ad = bc". This is false as stated: the integrand vanishes iff
+   `ad = bc` **and** `ac + bd ≥ 0` (`aeIntegrand_eq_zero_iff`; counterexample
+   `aeIntegrand_pos_of_antiparallel`; physical form `paper_condition_not_sufficient`). The authors
+   themselves note two paragraphs later (p. 10): "simply satisfying (2.23) is not sufficient for
+   having zero available energy, and more care is required", and they treat the isodynamic case
+   with the ramp function `R`, which is exactly the missing sign condition. Their derived results
+   survive: they use `ad = bc` only as a necessary condition (eq. 2.24 and the two cases follow)
+   and check sufficiency separately (G = 1 in §2.3.1, the sign of (2.29) in §2.3.2). So: a wrong
+   "if and only if" sentence, not a wrong conclusion.
+2. **"Positive definite".** p. 9: "the available energy is always positive definite". It is only
+   nonnegative; the paper's own §2.3 finds `A = 0` cases. Their proof ("squaring both sides")
+   also silently assumes `ac + bd ≥ 0`, though the case `ac + bd < 0` is trivial.
+3. **Prefactor.** Eq. (2.3): `dr dv = (π/m) dψ dα dℓ dμ dv∥` with `μ = m v⊥²/2B` (p. 6). With that
+   `μ`, `d³v = 2π v⊥ dv⊥ dv∥ = (2πB/m) dμ dv∥` and `d³r = dψ dα dℓ / B`, giving `2π/m`. A factor 2
+   in the absolute normalization appears likely (it carries into the `π²ΔψΔα/(4m)` of eq. 2.21).
+   It does not affect signs, vanishing sets or relative comparisons; the Lean formula keeps a
+   general `C > 0`.
+4. **Pure density gradient.** Eqs. 2.25–2.27 do follow from 2.23 (differentiate in `μ` with
+   `∂_ε ω* = 0`, then substitute; the earlier doubt came from a garbled extraction). Typo: "Substituting
+   (2.28) into (2.15)" should read (2.27). The conclusion `A = 0` is also proved directly
+   (`itg_ae_zero_of_no_temperature_gradient`).
+5. Footnote 4 (p. 10) confirms `η ≥ η_B` is stated as necessary, with the residual AE small.
 
 ## 3. Verified results
 
@@ -64,13 +75,39 @@ drift, not its bounce average. Omnigeneity (C2) does not make it vanish; only an
 (`B = B(ψ)` on the tube) does. So this AE measures something C2 does not, which is why it belongs
 in the turbulence part of the contract and not as a restatement of C2.
 
-## 4. Next steps (Q-35)
+## 4. The Boozer link (verified, Q-35 (c))
 
-- (b) The stability windows `0 ≤ η ≤ 2/3` and `η ≥ η_B` (source eqs. 2.30–2.34), first in the
+`Theory/Kinetic/ITGBoozer.lean`: field-line coordinates `(ψ, α = θ − ιφ, φ)` on the vacuum Boozer
+model; `∂_α ln B|_{ψ,φ} = ∂_θB/B` and `∂_ψ ln B|_{α,φ} = (∂_ψB + ι′φ∂_θB)/B` proved as derivatives
+(`hasDerivAt_logB_alpha`, `hasDerivAt_logB_psi`, `ι′` a supplied derivative); the drifts
+`omegaAlpha`, `omegaPsi` and the integrand `boozerIntegrand`. Hand calculation (not in Lean):
+in vacuum Boozer form `v_∇·∇α = ∂_ψB|_{α,φ}` and `v_∇·∇ψ = −∂_θB` exactly, so `φ` is the right
+coordinate along the line. **Physics:** `omegaPsi_ne_zero` shows that exact quasi-axisymmetry
+(`∂_θB ≠ 0`) leaves the local radial drift, so C2 does not imply a small ITG available energy;
+only isodynamic tubes remove it (`boozerIntegrand_isodynamic`).
+
+## 5. Obstacle for a candidate (raised 20 November 2026)
+
+The Dommaschk candidate has two certified invariant tori and no Boozer chart over a volume
+(audit AC-1), the same gap that blocks C2. What a single certified torus does and does not give:
+
+- `ω_ψ ∝ (b × ∇B)·∇ψ`: computable on one torus up to the factor `|∇ψ|`: `b × ∇B` from the
+  explicit field, `∇ψ/|∇ψ|` the torus normal. `|∇ψ|` along the line needs the neighbouring
+  surface spacing. Since `a, b, c, d` all carry it, it rescales the integrand at each `ℓ`
+  (`aeIntegrand_smul`), but it varies with `ℓ`, so it is not a harmless constant.
+- `ω_α ∝ (b × ∇B)·∇α`: the in-surface part of `∇α` comes from the torus angles; the normal part
+  needs `ι′` (shear) and the normal derivative of the angle map, i.e. information off the torus.
+
+Routes, both shared with the open C2 problem: (i) an approximate Boozer chart on a thin shell
+around a certified torus with a certified defect (the README's first priority for C2); (ii) the
+Whitney-smooth KAM family: the a-posteriori KAM data (twist, the derivative of the torus with
+respect to its frequency) give `ι′` and the normal structure to first order, which is all the
+linearized flux tube of the source uses. Solving (i) or (ii) once serves C2 and the ITG AE
+together.
+
+## 6. Next steps (Q-35)
+
+- (b) The stability windows `0 ≤ η ≤ 2/3` and `η ≥ η_B` (source eqs. 2.29–2.34), first in the
   isodynamic reduction.
-- (c) The Boozer link: in Boozer coordinates `α = θ − ιφ`, `ℓ ∝ φ`:
-  `∂_α B|_{ψ,φ} = ∂_θ B` and `∂_ψ B|_{α,φ} = ∂_ψ B + ι′ φ ∂_θ B` (the shear term is secular in
-  `φ`). The `BoozerField` structure has `B`, `Bψ`, `Bθ`, `Bφ` and `ι` but not `ι′`; add it as a
-  parameter.
-- (d) A certified value or bound on the Dommaschk tori (workstation; needs the vacuum Boozer data
-  of N-34 on each certified torus).
+- (c′) The drift identity `v_∇·∇α = ∂_ψB|_{α,φ}` from `Contract.BoozerChart`.
+- (d) Evaluation on a candidate: route (i) or (ii) of §5 first.
