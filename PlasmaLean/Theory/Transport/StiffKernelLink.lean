@@ -13,8 +13,8 @@ public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 # Steady kernel solutions satisfy the power balance of the stiff class
 
 Note N-45, question Q-33 (b). The stiff turbulent-transport class
-(`Theory/Transport/StiffTransport`) takes the steady power balance `Q ≤ W` as a hypothesis: the outward heat flow through the surface
-`ψ` is at most the heating power deposited inside it. This file derives it, with equality, for a
+(`Theory/Transport/StiffTransport`) takes the steady power balance `Q ≤ W` as a hypothesis: the
+outward heat flow through the surface `ψ` is at most the heating power deposited inside it. This file derives it, with equality, for a
 steady profile of the transport kernel (`Kernel/Transport`).
 
 ## Statement
