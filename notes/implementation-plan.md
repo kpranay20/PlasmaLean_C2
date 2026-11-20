@@ -2181,4 +2181,9 @@ peak above 3 GB. Up to 3 light modules may build at once within the total. This 
   torus-C certificate already gives `|dι/dΦ| ≥ 14.16/2π ≈ 2.254` (true ≈ 2.270), modulo the
   identification (Whitney family, not in Lean). An upper bound needs a workstation re-run of the
   admissibility chain.
+- **Shear lower bound used (21 November 2026):** `Theory/Kinetic/ITGShear`: with `|ι′| ≥ s₀`
+  (certified twist at torus C: `|dι/dψ| ≥ 14.16`, modulo the identification), every sheared flux
+  tube with `∂_θB ≠ 0` contains points of arbitrarily bad curvature beyond an explicit length, so
+  the source's ITG stability condition (2.35) can hold only on a finite tube. Zero warnings,
+  standard axioms. N-48 §9.
 

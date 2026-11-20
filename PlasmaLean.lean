@@ -119,6 +119,7 @@ public import PlasmaLean.Theory.Kinetic.ITGBoozer
 public import PlasmaLean.Theory.Kinetic.ITGStabilityWindows
 public import PlasmaLean.Theory.Kinetic.ITGDriftIdentity
 public import PlasmaLean.Theory.Kinetic.ITGDriftChart
+public import PlasmaLean.Theory.Kinetic.ITGShear
 public import PlasmaLean.Design.HelicalFluxGeometry
 public import PlasmaLean.Design.HelicalTransportBarrier
 public import PlasmaLean.Theory.Geometry.SurfaceCover

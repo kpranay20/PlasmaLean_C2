@@ -13,7 +13,7 @@
 | Produces | Q-36 statements; a plan; claims to check (§3) |
 | Difficulty | research: the identification of `⟨T⟩` with `dι/dψ` in the flow (ELP-S) setting, the derivative of the Boozer angle map, and certification cost |
 | Status | C1 supported by source study (with corrected attribution and normalization) and **confirmed numerically** on tori A, B, C (untrusted); C2, C3 supported by source study (derived, conditional); nothing in Lean |
-| Lean evidence | none (uses `ITGBoozer`, `ITGDriftChart` downstream) |
+| Lean evidence | `Theory/Kinetic/ITGShear` (use of a shear lower bound: `boozer_bad_curvature`, `itg_stability_condition_fails`) |
 | Audit evidence | not audited |
 | Last updated | 20 November 2026: created; source study and numerical check of C1 added (§6, §7) |
 
@@ -163,4 +163,23 @@ workstation-checked) and propagates the margin `τ′ = τ − kTc·eM > 0` to t
    not in Lean; until then the certified number is the twist, and its reading as shear is supported
    by the numerics above;
 3. `cc` and `dΦ/dV` are not needed in this frame (they were for the ELP-S normalization of §7).
+
+## 9. Using the shear lower bound: sheared tubes contain bad curvature (verified)
+
+`Theory/Kinetic/ITGShear.lean`. In Boozer units (`ψ` = toroidal flux / 2π) the certified twist
+of §8 reads directly `|ι′| = |dι/dψ| ≥ 14.16` at torus C (modulo the identification). The
+shear term `ι′φ∂_θB` of `∂_ψB|_{α,φ}` grows along the field line, so:
+
+- `exists_bad_curvature`, `boozer_bad_curvature`: if `|ι′| ≥ s₀ > 0`, `|∂_ψB| ≤ M`, `0 < B ≤ B_max`,
+  and `∂_θB` reaches `≥ c` and `≤ −c` at two points beyond the tube length
+  `L = (M + K B_max)/(s₀ c)`, then one of them has `∂_ψ ln B|_{α,φ} < −K`, whatever the sign of
+  `ι′` (bad curvature for a peaked density);
+- `itg_stability_condition_fails`: with `K = |∂_ψ ln T|`, the source's stability condition (2.35)
+  fails there: it can hold only on a flux tube shorter than `L`, and a larger certified shear makes
+  `L` shorter.
+
+Supplied, not certified: the two points (equidistribution of the irrational line and mean-zero
+`∂_θB`), and `M`, `c`, `B_max` along the line (they need the chart data, Q-35 (d)).
+Correction recorded: an earlier suggestion that the C2 bridge needs `ι′ ≠ 0` was wrong; its
+"twist" `ι_min` is `ι` itself.
 
