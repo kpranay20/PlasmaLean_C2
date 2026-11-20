@@ -70,3 +70,4 @@ Phase 8 (kam-route.md, finite-beta-stellarator.md):
 - [`cylinder-interface-stability.md`](cylinder-interface-stability.md) (N-44): method for N-12: fully signed free-boundary cylinder benchmark (close wall), toroidal interface criterion, transfer to a torus (Q-30, Q-31).
 - [`stiff-turbulent-transport.md`](stiff-turbulent-transport.md) (N-45): stiff turbulent transport as a mandatory model class (turbulent floor), core-temperature cap and no-access theorems; ITG layer-2 triage (Q-33).
 - [`gyrokinetic-model-contract.md`](gyrokinetic-model-contract.md) (N-46): linear local electrostatic gyrokinetic model contract (operator form), free-energy balance, Helander–Plunk growth bound, geometry independence of the bound (Q-34).
+- [`itg-available-energy.md`](itg-available-energy.md) (N-47): ITG available energy (Mackenbach et al. 2025): source check with a corrected vanishing condition, verified algebra, route to a certified value on a candidate (Q-35).
