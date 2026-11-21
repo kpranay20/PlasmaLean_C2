@@ -13,7 +13,7 @@
 | Produces | Q-36 statements; a plan; claims to check (§3) |
 | Difficulty | research: the identification of `⟨T⟩` with `dι/dψ` in the flow (ELP-S) setting, the derivative of the Boozer angle map, and certification cost |
 | Status | C1 supported by source study (with corrected attribution and normalization) and **confirmed numerically** on tori A, B, C (untrusted); C2, C3 supported by source study (derived, conditional); nothing in Lean |
-| Lean evidence | `Theory/Kinetic/ITGShear` (use of a shear lower bound: `boozer_bad_curvature`, `itg_stability_condition_fails`) |
+| Lean evidence | `Theory/Kinetic/ITGShear` (use of a shear lower bound: `boozer_bad_curvature`, `itg_stability_condition_fails`; two-point lemma: `exists_tail_near`, `boozer_two_points`, `boozer_bad_curvature_of_shear` in `Theory/Kinetic/ITGTwoPoint`) |
 | Audit evidence | not audited |
 | Last updated | 20 November 2026: created; source study and numerical check of C1 added (§6, §7) |
 
@@ -182,4 +182,22 @@ Supplied, not certified: the two points (equidistribution of the irrational line
 `∂_θB`), and `M`, `c`, `B_max` along the line (they need the chart data, Q-35 (d)).
 Correction recorded: an earlier suggestion that the C2 bridge needs `ι′ ≠ 0` was wrong; its
 "twist" `ι_min` is `ι` itself.
+
+## 10. The two points exist (verified, 21 November 2026)
+
+`Theory/Kinetic/ITGTwoPoint.lean` removes the supplied two-point hypothesis of §9:
+
+- `exists_tail_near`: tail density of an irrational rotation (`n ≥ N`), from the density of
+  `ℤa + ℤp` in Mathlib plus a walk with a small positive-multiple step;
+- `exists_deriv_neg_of_periodic`: `∂_θB` of a `θ`-periodic `B` takes both signs unless it vanishes
+  on the whole section (monotone + periodic ⇒ constant);
+- `boozer_two_points`: on a surface with `B` periodic in `θ` and `φ`, `ιP/p` irrational and
+  `∂_θB ≢ 0` on one section, every field line has points with `∂_θB ≥ c` and `≤ −c` beyond every
+  length;
+- `boozer_bad_curvature_of_shear`: with `|ι′| ≥ s₀ > 0` and global bounds `|∂_ψB| ≤ M`,
+  `0 < B ≤ B_max` on the surface, **every field line has points with `∂_ψ ln B|_{α,φ} < −K` for
+  every `K`**.
+
+Remaining inputs for torus C: `M`, `B_max`, a section with `∂_θB ≠ 0` (chart data, Q-35 (d)); the
+shear bound via the twist identification (§8); `ι` irrational is certified (Diophantine).
 

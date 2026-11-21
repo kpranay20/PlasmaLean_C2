@@ -2186,4 +2186,8 @@ peak above 3 GB. Up to 3 light modules may build at once within the total. This 
   tube with `∂_θB ≠ 0` contains points of arbitrarily bad curvature beyond an explicit length, so
   the source's ITG stability condition (2.35) can hold only on a finite tube. Zero warnings,
   standard axioms. N-48 §9.
+- **Two-point lemma (21 November 2026):** `Theory/Kinetic/ITGTwoPoint`: irrational field lines meet
+  both signs of `∂_θB` beyond every length on any non-isodynamic periodic surface; hence on a
+  sheared surface every field line has arbitrarily bad curvature (`boozer_bad_curvature_of_shear`).
+  Zero warnings, standard axioms. N-48 §10.
 
