@@ -2190,4 +2190,8 @@ peak above 3 GB. Up to 3 light modules may build at once within the total. This 
   both signs of `∂_θB` beyond every length on any non-isodynamic periodic surface; hence on a
   sheared surface every field line has arbitrarily bad curvature (`boozer_bad_curvature_of_shear`).
   Zero warnings, standard axioms. N-48 §10.
+- **Family derivative, conditional part (21 November 2026):** `Theory/KAM/FamilyDerivative`: from the
+  linearized frame equations of a differentiable torus family, twist = frequency change per unit
+  normal displacement, and the normal part is `ω′/⟨T⟩`. Remaining: the Whitney-C¹ family theorem
+  (G1) and the strip-algebra instance (G2). N-48 §11.
 

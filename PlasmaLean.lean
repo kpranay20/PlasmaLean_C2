@@ -121,6 +121,7 @@ public import PlasmaLean.Theory.Kinetic.ITGDriftIdentity
 public import PlasmaLean.Theory.Kinetic.ITGDriftChart
 public import PlasmaLean.Theory.Kinetic.ITGShear
 public import PlasmaLean.Theory.Kinetic.ITGTwoPoint
+public import PlasmaLean.Theory.KAM.FamilyDerivative
 public import PlasmaLean.Design.HelicalFluxGeometry
 public import PlasmaLean.Design.HelicalTransportBarrier
 public import PlasmaLean.Theory.Geometry.SurfaceCover

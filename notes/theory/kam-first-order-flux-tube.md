@@ -201,3 +201,20 @@ Correction recorded: an earlier suggestion that the C2 bridge needs `ι′ ≠ 0
 Remaining inputs for torus C: `M`, `B_max`, a section with `∂_θB ≠ 0` (chart data, Q-35 (d)); the
 shear bound via the twist identification (§8); `ι` irrational is certified (Diophantine).
 
+## 11. The conditional part of the family theorem (verified, 21 November 2026)
+
+`Theory/KAM/FamilyDerivative.lean`: in an abstract torus algebra (average, `𝓛` with
+`avg ∘ 𝓛 = 0` and `ker 𝓛 = constants`), the linearized frame equations of a differentiable family,
+`𝓛ξ₂ = 0`, `𝓛ξ₁ + Tξ₂ = ω′`, imply `ξ₂` constant, **`ω′ = ⟨T⟩ξ₂`** (`frequency_derivative`: twist =
+frequency change per unit normal displacement), `ξ₂ = ω′/⟨T⟩` when `⟨T⟩ ≠ 0`
+(`normal_displacement`, claim C2), `ξ₁` unique up to a constant; fixtures `trivialFrame`
+(accepted) and `no_family_of_zero_twist` (rejected). With the flux-normalized frame (§8) this is
+twist = shear.
+
+The remaining gap is now exactly two statements:
+(G1) the tori near a certified one form a Whitney-C¹ family over the Diophantine set whose
+derivative satisfies the linearized frame equations (a theorem from the literature; source study
+in progress);
+(G2) an instance of `FrameData` on the strip algebra `FA` (`ker 𝓛 = constants` for a Diophantine
+frequency; likely short from `Theory/KAM/Cohomological.cohSol_unique`).
+
