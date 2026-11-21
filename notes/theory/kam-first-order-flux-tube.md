@@ -218,3 +218,34 @@ in progress);
 (G2) an instance of `FrameData` on the strip algebra `FA` (`ker 𝓛 = constants` for a Diophantine
 frequency; likely short from `Theory/KAM/Cohomological.cohSol_unique`).
 
+## 12. G1 literature verdict (21 November 2026; agent source study, PDFs read)
+
+**No published theorem gives G1 in one statement** (a-posteriori hypotheses + Whitney-C¹ family +
+derivative from the linearized equation). Usable pieces:
+
+- **Vano, PhD thesis, UT Austin 2002 (mp_arc 02-276), Thm 6.2.3**: an abstract Nash–Moser
+  implicit-function theorem with Whitney regularity; the k-jet of the solution family is built from
+  the linearized equations, and Whitney regularity follows from an a-posteriori Newton theorem plus
+  **local uniqueness**. Unpublished, abstract, not specialized to flows. This is the reference
+  behind the "families are Whitney differentiable" remarks of de la Llave–González–Jorba–Villanueva
+  (2005) and Calleja–Celletti–de la Llave (2013).
+- **Lipschitz in frequency, a-posteriori, explicit-form constants**: Fontich–de la Llave–Sire
+  (arXiv:0903.0311, §7.1), Calleja–Celletti–de la Llave (Cor. 30). Computer-assisted precedent
+  with explicit family constants: Figueras–Haro–Luque arXiv:1806.05517 (circle maps, Lipschitz).
+- **Perturbative Whitney-C^∞** (Pöschel 1982; Broer–Huitema–Takens / Broer–Huitema–Sevryuk,
+  including volume-preserving 3-D flows): not checkable on one torus.
+- Citation correction: Villanueva, J. Nonlinear Sci. 27 (2017) has no Whitney result.
+
+**Route (proposal).** Prove a first-order "Whitney corollary" on top of the a-posteriori theorem
+the certificate already uses (Vano's mechanism with `k = 1`): (i) at each `ι₀` of the certified
+Diophantine set, the first-order correction `K₁` solves the linearized equation, whose normal part
+is `ω′/⟨T⟩` (`FamilyDerivative.normal_displacement`); (ii) `K₀ + ΔK₁` is an approximate torus at
+`ι₀ + Δ` with error `O(Δ²)`; (iii) the a-posteriori theorem plus **local uniqueness** give
+`‖K_{ι₀+Δ} − K₀ − ΔK₁‖ ≤ CΔ²`; (iv) Diophantine sets are perfect, so the Whitney derivative is
+unique; (v) differentiate the enclosed flux (calculus).
+
+**New hypotheses to certify:** (a) local uniqueness modulo phase with explicit radius (absent from
+ELP-S Thm 6.2 and FHL Thm 2.5; present in dLGJV Thm 2 for maps); (b) bounds uniform over an
+interval of `ι` (twist, frame, `‖D²K‖`), not one value; (c) the linearized-solution bound (already
+in the Newton step). Step (a) is the largest new piece.
+

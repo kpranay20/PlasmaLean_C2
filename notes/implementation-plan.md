@@ -2194,4 +2194,8 @@ peak above 3 GB. Up to 3 light modules may build at once within the total. This 
   linearized frame equations of a differentiable torus family, twist = frequency change per unit
   normal displacement, and the normal part is `ω′/⟨T⟩`. Remaining: the Whitney-C¹ family theorem
   (G1) and the strip-algebra instance (G2). N-48 §11.
+- **G1 source verdict (21 November 2026):** no single published theorem gives an a-posteriori
+  Whitney-C¹ torus family; route = a first-order Whitney corollary following Vano (2002, Thm 6.2.3)
+  on top of the certified a-posteriori theorem; the main new ingredient is local uniqueness of the
+  invariant torus modulo phase (N-48 §12).
 
